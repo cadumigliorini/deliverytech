@@ -1,0 +1,41 @@
+package com.deliverytech.delivery_api.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "pedido")
+public class Pedido {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDateTime dataPedido;
+    private String enderecoEntrega;
+    private BigDecimal subtotal;
+    private BigDecimal taxaEntrega;
+    private BigDecimal valorTotal;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id")
+    private Restaurant restaurante;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<ItemPedido> itens;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @Enumerated(EnumType.STRING)
+    private StatusPedido statusPedido;
+}

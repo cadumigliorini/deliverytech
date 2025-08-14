@@ -1,27 +1,29 @@
 package com.deliverytech.delivery_api.entity;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "restaurante")
-public class Restaurant<string> {
+@Table(name = "produto")
+public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String nome;
-
-    @Column(name = "descricao_local")
     private String descricao;
+    private BigDecimal preco;
+    private String categoria;
+    private boolean disponivel;
 
-    @OneToMany(mappedBy = "restaurante")
-    private List<Produto> produtos;
+    @ManyToOne
+    @JoinColumn(name = "restaurante_id")
+    private Restaurant restaurante;
 }
